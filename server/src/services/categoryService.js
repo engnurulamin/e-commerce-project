@@ -10,4 +10,12 @@ const create_category = async (name) => {
   return newCategory;
 };
 
-module.exports = create_category;
+const get_categories = async () => {
+  return await Category.find({}).select("name slug").lean();
+};
+
+const get_category = async (slug) => {
+  return await Category.find({ slug }).select("name slug").lean();
+};
+
+module.exports = { create_category, get_categories, get_category };
