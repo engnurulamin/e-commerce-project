@@ -6,6 +6,7 @@ const {
   createCategory,
   getCategories,
   getCategory,
+  updateCategory,
 } = require("../controllers/categoryController");
 const { validateCategory } = require("../validators/category");
 
@@ -21,5 +22,13 @@ categoryRouter.post(
 );
 categoryRouter.get("/", getCategories);
 categoryRouter.get("/:slug", getCategory);
+categoryRouter.put(
+  "/:slug",
+  validateCategory,
+  runValidation,
+  isLoggedIn,
+  isAdmin,
+  updateCategory
+);
 
 module.exports = categoryRouter;
