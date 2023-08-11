@@ -7,6 +7,7 @@ const {
   get_categories,
   get_category,
   update_category,
+  delete_category,
 } = require("../services/categoryService");
 const { find_by_id } = require("../services/find_by_id");
 
@@ -79,4 +80,28 @@ const updateCategory = async (req, res, next) => {
   }
 };
 
-module.exports = { createCategory, getCategories, getCategory, updateCategory };
+const deleteCategory = async (req, res, next) => {
+  try {
+    const { slug } = req.params;
+    const deletedCategory = await delete_category(slug);
+
+    if (!deletedCategory) {
+      throw createError(404, "Category not found");
+    }
+
+    return successResponse(res, {
+      statusCode: 200,
+      message: "Category was deleted successfully",
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = {
+  createCategory,
+  getCategories,
+  getCategory,
+  updateCategory,
+  deleteCategory,
+};
