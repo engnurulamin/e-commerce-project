@@ -1,15 +1,26 @@
 const data = require("../data");
-const User = require("../models/userModel")
-
-const seedUser = async(req, res, next) => {
+const User = require("../models/userModel");
+const Product = require("../models/productModel");
+const seedUser = async (req, res, next) => {
   try {
     await User.deleteMany({});
 
-    const users = await User.insertMany(data.users)
-    return res.status(201).json(users)
+    const users = await User.insertMany(data.users);
+    return res.status(201).json(users);
   } catch (error) {
-    next(error)
+    next(error);
   }
-}
+};
 
-module.exports = {seedUser}
+const seedProducts = async (req, res, next) => {
+  try {
+    await Product.deleteMany({});
+
+    const products = await Product.insertMany(data.products);
+    return res.status(201).json(products);
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = { seedUser, seedProducts };

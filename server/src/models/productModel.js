@@ -22,7 +22,6 @@ const productSchema = new Schema(
       required: [true, "Product description is required"],
       trim: true,
       lowercase: true,
-      unique: true,
       Minlength: [3, "Min length at least 3 characters"],
     },
 
