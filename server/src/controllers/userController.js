@@ -110,6 +110,7 @@ const processRegister = async (req, res, next) => {
     }
     const imageBufferString = image.buffer.toString("base64");
 
+    // does not work . will test later
     // const userExist = await userExist(email);
     // if (userExist) {
     //   throw createError(409, "User already exists");
