@@ -109,12 +109,12 @@ const processRegister = async (req, res, next) => {
       throw createError(400, "Image is too large. It must be less than 2 MB");
     }
     const imageBufferString = image.buffer.toString("base64");
-    // warning part
-    // const userExist = await userExist(email);
-    // if (userExist) {
-    //   throw createError(409, "User already exists");
-    // }
-    // warningpart end
+
+    const userExist = await User.userExist(email);
+    if (userExist) {
+      throw createError(409, "User already exists");
+    }
+
     const token = createJsonWebToken(
       { name, email, password, phone, address, image: imageBufferString },
       jwtActivationKey,
