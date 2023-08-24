@@ -18,22 +18,7 @@ const createProduct = async (req, res, next) => {
       throw createError(400, "Image is too large. It must be less than 2 MB");
     }
     const imageBufferString = image.buffer.toString("base64");
-    // const productExist = await Product.exists({ name: name });
 
-    // if (productExist) {
-    //   throw createError(409, "This product is already existed");
-    // }
-
-    // const product = await Product.create({
-    //   name: name,
-    //   slug: slugify(name),
-    //   description: description,
-    //   price: price,
-    //   quantity: quantity,
-    //   shipping: shipping,
-    //   image: imageBufferString,
-    //   category: category,
-    // });
     const productData = {
       name,
       description,
