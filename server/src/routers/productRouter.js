@@ -14,6 +14,8 @@ productRouter.post(
   upload.single("image"),
   validateProduct,
   runValidation,
+  isLoggedIn,
+  isAdmin,
   createProduct
 );
 
