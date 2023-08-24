@@ -3,6 +3,7 @@ const { successResponse } = require("./responseController");
 const { createJsonWebToken } = require("../helpers/jasonwt");
 const Product = require("../models/productModel");
 const slugify = require("slugify");
+const { create_product } = require("../services/productService");
 
 const createProduct = async (req, res, next) => {
   try {
@@ -17,22 +18,33 @@ const createProduct = async (req, res, next) => {
       throw createError(400, "Image is too large. It must be less than 2 MB");
     }
     const imageBufferString = image.buffer.toString("base64");
-    const productExist = await Product.exists({ name: name });
+    // const productExist = await Product.exists({ name: name });
 
-    if (productExist) {
-      throw createError(409, "This product is already existed");
-    }
+    // if (productExist) {
+    //   throw createError(409, "This product is already existed");
+    // }
 
-    const product = await Product.create({
-      name: name,
-      slug: slugify(name),
-      description: description,
-      price: price,
-      quantity: quantity,
-      shipping: shipping,
-      image: imageBufferString,
-      category: category,
-    });
+    // const product = await Product.create({
+    //   name: name,
+    //   slug: slugify(name),
+    //   description: description,
+    //   price: price,
+    //   quantity: quantity,
+    //   shipping: shipping,
+    //   image: imageBufferString,
+    //   category: category,
+    // });
+    const productData = {
+      name,
+      description,
+      price,
+      quantity,
+      shipping,
+      imageBufferString,
+      category,
+    };
+
+    const product = await create_product(productData);
 
     return successResponse(res, {
       statusCode: 200,
