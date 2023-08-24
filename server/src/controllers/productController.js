@@ -41,4 +41,36 @@ const createProduct = async (req, res, next) => {
   }
 };
 
-module.exports = { createProduct };
+const getAllProgucts = async (req, res, next) => {
+  try {
+    const page = parseInt(req.query.page || 1);
+    const limit = parseInt(req.query.limit || 4);
+
+    const products = await Product.find({})
+      .populate("category")
+      .skip((page - 1) * limit)
+      .limit(limit)
+      .sort({ crratedAt: -1 });
+
+    if (!products) {
+      throw createError(404, "Products not found !");
+    }
+
+    const count = await Product.find({}).countDocuments();
+
+    return successResponse(res, {
+      statusCode: 200,
+      message: "All products return successfully",
+      payload: {
+        products: products,
+        pagination: {
+          totalProducts: count,
+        },
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = { createProduct, getAllProgucts };
