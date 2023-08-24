@@ -20,7 +20,7 @@ const createProduct = async (req, res, next) => {
     const productExist = await Product.exists({ name: name });
 
     if (productExist) {
-      throw createError(409, "This product already exists");
+      throw createError(409, "This product is already existed");
     }
 
     const product = await Product.create({
