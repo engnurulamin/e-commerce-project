@@ -43,6 +43,7 @@ const get_all_products = async (page = 1, limit = 4) => {
   const count = await Product.find({}).countDocuments();
   const totalPage = Math.ceil(count / limit);
 
+  if (products == false) throw createError(404, "Products Not Found");
   return { products, count, totalPage };
 };
 

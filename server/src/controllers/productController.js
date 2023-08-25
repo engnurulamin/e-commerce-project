@@ -53,8 +53,6 @@ const getAllProgucts = async (req, res, next) => {
 
     const data = await get_all_products(page, limit);
 
-    if (!data) throw createError(404, "Products not found");
-
     return successResponse(res, {
       statusCode: 200,
       message: "All products return successfully",
