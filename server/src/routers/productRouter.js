@@ -9,6 +9,7 @@ const {
   getAllProgucts,
   getProduct,
   deleteProduct,
+  updateProduct,
 } = require("../controllers/productController");
 const { validateProduct } = require("../validators/product");
 
@@ -27,5 +28,12 @@ productRouter.post(
 productRouter.get("/", getAllProgucts);
 productRouter.get("/:slug", getProduct);
 productRouter.delete("/:slug", isLoggedIn, isAdmin, deleteProduct);
+productRouter.put(
+  "/:slug",
+  upload.single("image"),
+  validateProduct,
+  runValidation,
+  updateProduct
+);
 
 module.exports = productRouter;
