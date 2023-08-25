@@ -7,6 +7,7 @@ const { isLoggedIn, isLoggedOut, isAdmin } = require("../middleware/auth");
 const {
   createProduct,
   getAllProgucts,
+  getProguct,
 } = require("../controllers/productController");
 const { validateProduct } = require("../validators/product");
 
@@ -23,5 +24,6 @@ productRouter.post(
 );
 
 productRouter.get("/", getAllProgucts);
+productRouter.get("/:slug", getProguct);
 
 module.exports = productRouter;

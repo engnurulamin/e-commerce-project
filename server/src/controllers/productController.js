@@ -70,4 +70,19 @@ const getAllProgucts = async (req, res, next) => {
   }
 };
 
-module.exports = { createProduct, getAllProgucts };
+const getProguct = async (req, res, next) => {
+  try {
+    const { slug } = req.params;
+    const data = await Product.findOne({ slug }).populate("category");
+
+    return successResponse(res, {
+      statusCode: 200,
+      message: "Product returned successfully",
+      payload: { data },
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = { createProduct, getAllProgucts, getProguct };
