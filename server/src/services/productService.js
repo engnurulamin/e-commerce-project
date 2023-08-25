@@ -53,6 +53,7 @@ const get_product = async (slug) => {
   if (!product) throw createError(404, "Product not found");
   return product;
 };
+
 const delete_product = async (slug) => {
   const d_product = await Product.findOneAndDelete({ slug });
 
@@ -62,9 +63,37 @@ const delete_product = async (slug) => {
 
   return d_product;
 };
+
+const update_product = async (slug, update, image, updateOptions) => {
+  if (update.name) {
+    update.slug = slugify(update.name);
+  }
+
+  if (image) {
+    if (image.size > 1024 * 1024 * 2) {
+      throw createError(400, "Image is too large. It must be less than 2 MB");
+    }
+
+    update.image = image.buffer.toString("base64");
+  }
+
+  const updatedProduct = await Product.findOneAndUpdate(
+    { slug },
+    update,
+    updateOptions
+  );
+
+  if (!updatedProduct) {
+    throw createError(404, "Product does not exist");
+  }
+
+  return updatedProduct;
+};
+
 module.exports = {
   create_product,
   get_all_products,
   get_product,
   delete_product,
+  update_product,
 };
