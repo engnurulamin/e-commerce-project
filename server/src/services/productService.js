@@ -40,9 +40,6 @@ const get_all_products = async (page = 1, limit = 4) => {
     .limit(limit)
     .sort({ crratedAt: -1 });
 
-  if (!products) {
-    throw createError(404, "Products not found !");
-  }
   const count = await Product.find({}).countDocuments();
   const totalPage = Math.ceil(count / limit);
 
@@ -50,11 +47,23 @@ const get_all_products = async (page = 1, limit = 4) => {
 };
 
 const get_product = async (slug) => {
-  return Product.findOne({ slug }).populate("category");
-};
+  const product = await Product.findOne({ slug }).populate("category");
 
+  if (!product) throw createError(404, "Product not found");
+  return product;
+};
+const delete_product = async (slug) => {
+  const d_product = await Product.findOneAndDelete({ slug });
+
+  if (!d_product) {
+    throw createError(404, "Product not found");
+  }
+
+  return d_product;
+};
 module.exports = {
   create_product,
   get_all_products,
   get_product,
+  delete_product,
 };

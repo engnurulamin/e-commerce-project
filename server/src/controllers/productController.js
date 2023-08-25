@@ -7,6 +7,7 @@ const {
   create_product,
   get_all_products,
   get_product,
+  delete_product,
 } = require("../services/productService");
 
 const createProduct = async (req, res, next) => {
@@ -52,6 +53,8 @@ const getAllProgucts = async (req, res, next) => {
 
     const data = await get_all_products(page, limit);
 
+    if (!data) throw createError(404, "Products not found");
+
     return successResponse(res, {
       statusCode: 200,
       message: "All products return successfully",
@@ -89,7 +92,7 @@ const getProduct = async (req, res, next) => {
 const deleteProduct = async (req, res, next) => {
   try {
     const { slug } = req.params;
-    await Product.findOneAndDelete({ slug });
+    await delete_product(slug);
 
     return successResponse(res, {
       statusCode: 200,

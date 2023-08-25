@@ -51,7 +51,7 @@ const data = {
     },
     {
       name: "Samsung Galuxy",
-      slug: "samsung galuxy",
+      slug: "samsung-galuxy",
       description: "samsung galagy phone",
       price: 445.99,
       quantity: 30,
