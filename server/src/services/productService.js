@@ -49,7 +49,12 @@ const get_all_products = async (page = 1, limit = 4) => {
   return { products, count, totalPage };
 };
 
+const get_product = async (slug) => {
+  return Product.findOne({ slug }).populate("category");
+};
+
 module.exports = {
   create_product,
   get_all_products,
+  get_product,
 };

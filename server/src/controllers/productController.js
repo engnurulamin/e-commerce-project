@@ -6,6 +6,7 @@ const slugify = require("slugify");
 const {
   create_product,
   get_all_products,
+  get_product,
 } = require("../services/productService");
 
 const createProduct = async (req, res, next) => {
@@ -73,7 +74,7 @@ const getAllProgucts = async (req, res, next) => {
 const getProguct = async (req, res, next) => {
   try {
     const { slug } = req.params;
-    const data = await Product.findOne({ slug }).populate("category");
+    const data = await get_product(slug);
 
     return successResponse(res, {
       statusCode: 200,
