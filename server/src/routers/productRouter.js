@@ -26,6 +26,6 @@ productRouter.post(
 
 productRouter.get("/", getAllProgucts);
 productRouter.get("/:slug", getProduct);
-productRouter.delete("/:slug", deleteProduct);
+productRouter.delete("/:slug", isLoggedIn, isAdmin, deleteProduct);
 
 module.exports = productRouter;
