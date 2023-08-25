@@ -3,7 +3,10 @@ const { successResponse } = require("./responseController");
 const { createJsonWebToken } = require("../helpers/jasonwt");
 const Product = require("../models/productModel");
 const slugify = require("slugify");
-const { create_product } = require("../services/productService");
+const {
+  create_product,
+  get_all_products,
+} = require("../services/productService");
 
 const createProduct = async (req, res, next) => {
   try {
@@ -46,25 +49,19 @@ const getAllProgucts = async (req, res, next) => {
     const page = parseInt(req.query.page || 1);
     const limit = parseInt(req.query.limit || 4);
 
-    const products = await Product.find({})
-      .populate("category")
-      .skip((page - 1) * limit)
-      .limit(limit)
-      .sort({ crratedAt: -1 });
-
-    if (!products) {
-      throw createError(404, "Products not found !");
-    }
-
-    const count = await Product.find({}).countDocuments();
+    const data = await get_all_products(page, limit);
 
     return successResponse(res, {
       statusCode: 200,
       message: "All products return successfully",
       payload: {
-        products: products,
+        products: data.products,
         pagination: {
-          totalProducts: count,
+          totalPage: data.totalPage,
+          currentPage: page,
+          previusPage: page - 1,
+          nextPage: page + 1,
+          totalProducts: data.count,
         },
       },
     });

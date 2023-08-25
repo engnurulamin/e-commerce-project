@@ -33,6 +33,23 @@ const create_product = async (productData) => {
   return product;
 };
 
+const get_all_products = async (page = 1, limit = 4) => {
+  const products = await Product.find({})
+    .populate("category")
+    .skip((page - 1) * limit)
+    .limit(limit)
+    .sort({ crratedAt: -1 });
+
+  if (!products) {
+    throw createError(404, "Products not found !");
+  }
+  const count = await Product.find({}).countDocuments();
+  const totalPage = Math.ceil(count / limit);
+
+  return { products, count, totalPage };
+};
+
 module.exports = {
   create_product,
+  get_all_products,
 };
