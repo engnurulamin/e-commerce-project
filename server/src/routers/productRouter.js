@@ -8,6 +8,7 @@ const {
   createProduct,
   getAllProgucts,
   getProduct,
+  deleteProduct,
 } = require("../controllers/productController");
 const { validateProduct } = require("../validators/product");
 
@@ -25,5 +26,6 @@ productRouter.post(
 
 productRouter.get("/", getAllProgucts);
 productRouter.get("/:slug", getProduct);
+productRouter.delete("/:slug", deleteProduct);
 
 module.exports = productRouter;

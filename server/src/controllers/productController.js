@@ -86,4 +86,18 @@ const getProduct = async (req, res, next) => {
   }
 };
 
-module.exports = { createProduct, getAllProgucts, getProduct };
+const deleteProduct = async (req, res, next) => {
+  try {
+    const { slug } = req.params;
+    await Product.findOneAndDelete({ slug });
+
+    return successResponse(res, {
+      statusCode: 200,
+      message: "Product deleted successfully",
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = { createProduct, getAllProgucts, getProduct, deleteProduct };
