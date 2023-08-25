@@ -71,7 +71,7 @@ const getAllProgucts = async (req, res, next) => {
   }
 };
 
-const getProguct = async (req, res, next) => {
+const getProduct = async (req, res, next) => {
   try {
     const { slug } = req.params;
     const data = await get_product(slug);
@@ -86,4 +86,4 @@ const getProguct = async (req, res, next) => {
   }
 };
 
-module.exports = { createProduct, getAllProgucts, getProguct };
+module.exports = { createProduct, getAllProgucts, getProduct };
