@@ -27,3 +27,5 @@ module.exports = {
   jwtResetPasswordKey,
   jwtRefreshKey,
 };
+// smtppassword='iotsvuzwyosxpnbb'
+//username:namin2750@gmail.com
